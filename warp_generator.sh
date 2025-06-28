@@ -1,4 +1,5 @@
 #!/bin/bash
+p
 
 clear
 mkdir -p ~/.cloudshell && touch ~/.cloudshell/no-apt-get-warning # Для Google Cloud Shell, но лучше там не выполнять
@@ -24,6 +25,19 @@ peer_pub=$(echo "$response" | jq -r '.result.config.peers[0].public_key')
 client_ipv4=$(echo "$response" | jq -r '.result.config.interface.addresses.v4')
 client_ipv6=$(echo "$response" | jq -r '.result.config.interface.addresses.v6')
 
+while true; do
+  read -r -p "Вы хотите использовать dns.malw.link чтобы разблокировать некоторые сайты с геоблоком и блокировать некоторые рекламные объявления? Если напишите n, то в конфигурации будет использоваться DNS от Cloudflare. Если y, то в конфигурации будет использоваться dns.malw.link. Узнать больше о dns.malw.link какие сервисы разблокироваются и блокируются можно на этом сайте: info.dns.malw.link (y/n): " dns_choice
+  if [[ "$dns_choice" == "y" || "$dns_choice" == "Y" ]]; then
+    DNS_SERVERS="46.226.165.53, 64.188.98.242, 2a12:5940:cf09::2, 2a01:ecc0:2c1:2::2"
+    break
+  elif [[ "$dns_choice" == "n" || "$dns_choice" == "N" ]]; then
+    DNS_SERVERS="1.1.1.1, 2606:4700:4700::1111, 1.0.0.1, 2606:4700:4700::1001"
+    break
+  else
+    echo "❗ Введите только 'y' или 'n'."
+  fi
+done
+
 conf=$(cat <<-EOM
 [Interface]
 PrivateKey = ${priv}
@@ -38,7 +52,7 @@ H3 = 3
 H4 = 4
 MTU = 1280
 Address = ${client_ipv4}, ${client_ipv6}
-DNS = 1.1.1.1, 2606:4700:4700::1111, 1.0.0.1, 2606:4700:4700::1001
+DNS = $DNS_SERVERS
 
 [Peer]
 PublicKey = ${peer_pub}
