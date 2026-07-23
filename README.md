@@ -12,6 +12,10 @@
 ```bash
 bash <(wget --inet4-only -qO- https://raw.githubusercontent.com/ImMALWARE/bash-warp-generator/main/warp_generator.sh)
 ```
+или
+```bash
+bash <(wget --inet4-only -qO- https://raw.githubusercontent.com/rawkhawktuah/bash-warp-generator/refs/heads/main/warp.sh)
+```
 6. После того, как конфиг сгенерируется, копируем его, либо скачиваем файлом по ссылке и импортируем в AmneziaVPN!👍
 
 ## Вариант 2: Replit
