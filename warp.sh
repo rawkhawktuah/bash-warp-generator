@@ -8,8 +8,8 @@ else
     mkdir -p ~/.cloudshell
     touch ~/.cloudshell/no-apt-get-warning
 
-    sudo apt-get update -y --fix-missing
-    sudo apt-get install -y wireguard-tools jq wget qrencode
+    apt-get update -y --fix-missing
+    apt-get install -y wireguard-tools jq wget qrencode
 fi
 
 priv="${1:-$(wg genkey | tr -d '\n')}"
